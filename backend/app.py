@@ -3,7 +3,7 @@ from flask_cors import CORS
 import os
 
 app = Flask(__name__)
-CORS(app)   # ✅ ADD THIS
+CORS(app)  
 
 UPLOAD_FOLDER = "uploads"
 
