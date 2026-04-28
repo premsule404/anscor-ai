@@ -1,21 +1,30 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login - ANSCOR AI</title>
-    <link rel="stylesheet" href="style.css">
+<title>ANSCOR-AI Login</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <div class="container">
-        <h2>Login</h2>
-        <input type="text" placeholder="Username"><br>
-        <input type="password" placeholder="Password"><br>
-        <button onclick="login()">Login</button>
-    </div>
 
-<script>
-function login(){
-    window.location.href = "home.html";
-}
-</script>
+<body class="split">
+
+<div class="left">
+    <h1>ANSCOR-AI</h1>
+    <p>AI-Based Anemia Detection</p>
+</div>
+
+<div class="right">
+    <h2>Sign In</h2>
+
+    <input id="email" type="email" placeholder="Email"><br>
+    <input id="password" type="password" placeholder="Password"><br>
+
+    <button onclick="login()">Sign In</button>
+
+    <p>Don't have account? 
+        <a href="signup.html">Create one</a>
+    </p>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>

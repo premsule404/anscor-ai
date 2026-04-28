@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Profile</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="profile-box">
+    <h2>User Profile</h2>
+
+    <p><b>Name:</b> <span id="name"></span></p>
+    <p><b>Email:</b> <span id="email"></span></p>
+    <p><b>Phone:</b> <span id="phone"></span></p>
+    <p><b>Sex:</b> <span id="sex"></span></p>
+    <p><b>DOB:</b> <span id="dob"></span></p>
+    <p><b>Age:</b> <span id="age"></span></p>
+    <p><b>Blood Group:</b> <span id="blood"></span></p>
+    <p><b>Country:</b> <span id="country"></span></p>
+</div>
+
+<script>
+document.getElementById("name").innerText = localStorage.getItem("name");
+document.getElementById("email").innerText = localStorage.getItem("email");
+document.getElementById("phone").innerText = localStorage.getItem("phone");
+
+document.getElementById("sex").innerText = localStorage.getItem("sex");
+document.getElementById("dob").innerText = localStorage.getItem("dob");
+document.getElementById("age").innerText = localStorage.getItem("age");
+document.getElementById("blood").innerText = localStorage.getItem("blood");
+document.getElementById("country").innerText = localStorage.getItem("country");
+</script>
+
+</body>
+</html>
