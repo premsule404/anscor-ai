@@ -1,0 +1,180 @@
+body {
+    margin: 0;
+    font-family: Arial;
+
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url("./assets/medical.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    color: white;
+}
+
+body {
+    font-family: Arial;
+    text-align: center;
+    margin-top: 100px;
+}
+
+.container {
+    border: 1px solid #ccc;
+    padding: 20px;
+    display: inline-block;
+}
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+/* Split layout */
+.split {
+    display: flex;
+    height: 100vh;
+}
+
+.left h1 {
+    font-size: 40px;
+    color: #00ffff;
+}
+
+.left p {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.left {
+    width: 50%;
+    height: 100vh;
+    position: relative;
+
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url("./assets/bg.jpg");
+    background-size: cover;
+    background-position: center;
+
+    color: #00e6e6;   /* cyan text */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right {
+    width: 50%;
+    padding: 50px;
+    background: #0d0d2b;
+    color: white;
+}
+
+input {
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background: purple;
+    color: white;
+    border: none;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    background: black;
+    color: white;
+    padding: 10px;
+}
+
+/* Upload icons */
+.options {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.options label {
+    text-align: center;
+    cursor: pointer;
+}
+
+.profile-box {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    background: rgba(0, 0, 0, 0.7);   /* dark transparent */
+    color: white;
+
+    padding: 20px;
+    border-radius: 10px;
+
+    box-shadow: 0px 0px 10px black;
+    width: 250px;
+    z-index: 1000;   /* ensures it shows above everything */
+}
+
+.profile-box p {
+    margin: 6px 0;
+    font-size: 14px;
+}
+
+.section {
+    background: rgba(0, 0, 0, 0.6);
+    margin: 30px auto;
+    padding: 20px;
+    width: 60%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.upload-box {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+.upload-box label {
+    cursor: pointer;
+    padding: 15px;
+    background: #222;
+    border-radius: 10px;
+}
+
+.upload-box input {
+    display: none;
+}
+
+button {
+    padding: 10px 20px;
+    background: purple;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.survey {
+    width: 80%;
+    margin: auto;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;   /* left text, right checkbox */
+    align-items: center;
+
+    padding: 10px;
+    border-bottom: 1px solid gray;
+}
+
+.row span {
+    text-align: left;
+}
+
+.row input {
+    transform: scale(1.2);
+}

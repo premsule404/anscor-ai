@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Check Anemia</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h1 style="text-align:center;">Anemia Check</h1>
+
+<!-- 🔹 PART 1: IMAGE UPLOAD -->
+<div class="section">
+    <h2>Select Image Source</h2>
+
+    <div class="upload-box">
+        <label>
+            <input id="fileInput" type="file" accept="image/*" capture="camera">
+            📸 Camera
+        </label>
+
+        <label>
+            <input type="file" accept="image/*">
+            🖼 Photos
+        </label>
+
+        <label>
+            <input type="file">
+            📂 Files
+        </label>
+    </div>
+
+    <button onclick="upload()">Upload</button>
+</div>
+
+<!-- 🔹 PART 2: SYMPTOMS SURVEY -->
+<div class="section">
+    <h2>Check Symptoms</h2>
+
+    <div class="survey">
+
+        <div class="row">
+            <span>Feeling faint</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Malaise</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Dizziness</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Shortness of breath</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Lightheadedness</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Pallor</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Cold feet</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Extreme fatigue</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Pale skin</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Tiredness</span>
+            <input type="checkbox">
+        </div>
+
+        <div class="row">
+            <span>Fatigue after eating</span>
+            <input type="checkbox">
+        </div>
+
+    </div>
+
+    <button>Submit Symptoms</button>
+</div>
