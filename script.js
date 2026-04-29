@@ -38,7 +38,7 @@ function signup() {
     localStorage.setItem("country", document.getElementById("country").value);
 
     alert("Registered!");
-    window.location.href = "login.html";
+    window.location.href = "home.html";
 }
 
 // NAVIGATION
