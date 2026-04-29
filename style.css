@@ -178,3 +178,90 @@ button {
 .row input {
     transform: scale(1.2);
 }
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+    body {
+        padding: 10px;
+    }
+
+    h1, h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .container, .card {
+        width: 95%;
+        margin: 10px auto;
+        padding: 15px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* Upload buttons */
+    .upload-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Symptoms alignment */
+    .symptom-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #555;
+    }
+
+    .symptom-row label {
+        font-size: 14px;
+    }
+
+    .symptom-row input {
+        transform: scale(1.2);
+    }
+
+    /* Navbar */
+    .navbar {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .profile-btn {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
+body {
+    background: url("assets/medical.jpg") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.card {
+    max-width: 500px;
+    margin: auto;
+}
+
+.symptom-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #555;
+}
+
+.symptom-row label {
+    color: white;
+}
+
+.symptom-row input {
+    transform: scale(1.2);
+}

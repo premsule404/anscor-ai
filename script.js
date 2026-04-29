@@ -79,3 +79,40 @@ async function upload() {
         alert("Error connecting to backend");
     }
 }
+
+function submitSymptoms() {
+    const symptoms = [];
+
+    document.querySelectorAll('input[type="checkbox"]:checked')
+        .forEach(cb => symptoms.push(cb.value));
+
+    // Save to localStorage
+    localStorage.setItem("symptoms", JSON.stringify(symptoms));
+
+    // Redirect to result page
+    window.location.href = "result.html";
+}
+
+function analyzeSymptoms() {
+    const symptoms = JSON.parse(localStorage.getItem("symptoms")) || [];
+    let result = "";
+
+    const count = symptoms.length;
+
+    if (count >= 6) {
+        result = "⚠️ High possibility of Anemia. Please consult a doctor immediately.";
+    } 
+    else if (count >= 3) {
+        result = "⚠️ Moderate symptoms detected. Monitor your health and consider medical advice.";
+    } 
+    else if (count > 0) {
+        result = "🟡 Mild symptoms. Keep track and maintain a healthy diet.";
+    } 
+    else {
+        result = "✅ No major symptoms detected.";
+    }
+
+    result += "\n\nSelected Symptoms: " + symptoms.join(", ");
+    
+    document.getElementById("resultText").innerText = result;
+}
