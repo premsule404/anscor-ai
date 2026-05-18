@@ -1,31 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>ANSCOR-AI Login</title>
-<link rel="stylesheet" href="style.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ANSCOR-AI Login
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
 <body class="split">
 
-<div class="left">
-    <h1>ANSCOR-AI</h1>
-    <p>AI-Based Anemia Detection</p>
-</div>
+    <!-- LEFT SIDE -->
 
-<div class="right">
-    <h2>Sign In</h2>
+    <div class="left">
 
-    <input id="email" type="email" placeholder="Email"><br>
-    <input id="password" type="password" placeholder="Password"><br>
+        <h1>ANSCOR-AI</h1>
 
-    <button onclick="login()">Sign In</button>
+        <p>
+            AI-Based Non-Invasive
+            Anemia Detection System
+        </p>
 
-    <p>Don't have account? 
-        <a href="signup.html">Create one</a>
-    </p>
-</div>
+    </div>
 
-<script src="script.js"></script>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right">
+
+        <div class="form-container">
+
+            <h2>Sign In</h2>
+
+            <!-- EMAIL -->
+
+            <input
+                id="email"
+                type="email"
+                placeholder="Email"
+            >
+
+            <!-- PASSWORD -->
+
+            <input
+                id="password"
+                type="password"
+                placeholder="Password"
+            >
+
+            <!-- LOGIN BUTTON -->
+
+            <button onclick="login()">
+
+                Sign In
+
+            </button>
+
+            <!-- SIGNUP LINK -->
+
+            <p class="bottom-text">
+
+                Don't have an account?
+
+                <a href="signup.html">
+
+                    Create One
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>

@@ -1,19 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Check Anemia</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
-<body>
+<body class="upload-page">
 
-    <h1 style="text-align:center;">Anemia Check</h1>
+    <!-- NAVBAR -->
 
-    <!-- IMAGE UPLOAD SECTION -->
+    <div class="navbar">
+
+        <h2>ANSCOR-AI</h2>
+
+        <button onclick="goProfile()">
+
+            Profile
+
+        </button>
+
+    </div>
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h1>AI-Based Anemia Screening</h1>
+
+        <p>
+            Upload a nail image and
+            complete symptom survey
+        </p>
+
+    </div>
+
+
+    <!-- IMAGE SECTION -->
 
     <div class="section">
 
@@ -21,17 +58,21 @@
 
         <div class="upload-box">
 
+            <!-- MAIN INPUT -->
+
+            <input
+                id="fileInput"
+                type="file"
+                accept="image/*"
+                hidden
+            >
+
             <!-- CAMERA -->
 
-            <label class="upload-option">
-
-                <input
-                    id="fileInput"
-                    type="file"
-                    accept="image/*"
-                    capture="camera"
-                    hidden
-                >
+            <label
+                for="fileInput"
+                class="upload-option"
+            >
 
                 📷 Camera
 
@@ -39,14 +80,10 @@
 
             <!-- PHOTOS -->
 
-            <label class="upload-option">
-
-                <input
-                    type="file"
-                    accept="image/*"
-                    hidden
-                    onchange="document.getElementById('fileInput').files=this.files"
-                >
+            <label
+                for="fileInput"
+                class="upload-option"
+            >
 
                 🖼 Photos
 
@@ -54,13 +91,10 @@
 
             <!-- FILES -->
 
-            <label class="upload-option">
-
-                <input
-                    type="file"
-                    hidden
-                    onchange="document.getElementById('fileInput').files=this.files"
-                >
+            <label
+                for="fileInput"
+                class="upload-option"
+            >
 
                 📁 Files
 
@@ -68,20 +102,28 @@
 
         </div>
 
-        <div class="button-group">
+        <!-- PREVIEW -->
 
-            <button
-                id="analyzeBtn"
-                onclick="validateSurvey()"
+        <div class="preview-container">
+
+            <img
+                id="previewImage"
+                style="
+                    display:none;
+                    width:220px;
+                    height:220px;
+                    object-fit:cover;
+                    border-radius:15px;
+                    margin-top:20px;
+                "
             >
-                Analyze Image
-            </button>
 
         </div>
 
     </div>
 
-    <!-- SYMPTOMS SECTION -->
+
+    <!-- SYMPTOM SECTION -->
 
     <div class="section">
 
@@ -142,9 +184,24 @@
             <input type="checkbox" value="Fatigue after eating">
         </div>
 
+
+        <!-- BUTTONS -->
+
         <div class="button-group">
 
-            <button onclick="submitSymptoms()">
+            <button
+                id="analyzeBtn"
+                onclick="validateSurvey()"
+            >
+
+                Analyze Image
+
+            </button>
+
+            <button
+                id="submitBtn"
+                onclick="submitSymptoms()"
+            >
 
                 Submit Symptoms
 
@@ -153,6 +210,41 @@
         </div>
 
     </div>
+
+
+    <!-- IMAGE PREVIEW SCRIPT -->
+
+    <script>
+
+        const fileInput =
+            document.getElementById(
+                "fileInput"
+            );
+
+        const previewImage =
+            document.getElementById(
+                "previewImage"
+            );
+
+        fileInput.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    this.files[0];
+
+                if (file) {
+
+                    previewImage.src =
+                        URL.createObjectURL(file);
+
+                    previewImage.style.display =
+                        "block";
+                }
+            }
+        );
+
+    </script>
 
     <script src="script.js"></script>
 

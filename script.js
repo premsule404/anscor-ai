@@ -1,93 +1,103 @@
+// ======================
 // LOGIN FUNCTION
+// ======================
+
 function login() {
 
     let email = document.getElementById("email")?.value;
     let password = document.getElementById("password")?.value;
 
     if (!email || !password) {
+
         alert("Please enter email and password");
         return;
     }
 
     alert("Login Successful");
+
     window.location.href = "home.html";
 }
 
 
+// ======================
 // SIGNUP FUNCTION
+// ======================
+
 function signup() {
 
     let name = document.getElementById("name")?.value;
     let email = document.getElementById("email")?.value;
     let phone = document.getElementById("phone")?.value;
     let password = document.getElementById("password")?.value;
+    let sex = document.getElementById("sex")?.value;
+    let dob = document.getElementById("dob")?.value;
+    let blood = document.getElementById("blood")?.value;
+    let country = document.getElementById("country")?.value;
 
-    if (!name || !email || !phone || !password) {
+    if (
+        !name ||
+        !email ||
+        !phone ||
+        !password ||
+        !sex ||
+        !dob ||
+        !blood ||
+        !country
+    ) {
+
         alert("Please fill all fields");
         return;
     }
 
-    localStorage.setItem(
-        "name",
-        document.getElementById("name").value
-    );
+    // SAVE USER DATA
 
-    localStorage.setItem(
-        "email",
-        document.getElementById("email").value
-    );
-
-    localStorage.setItem(
-        "phone",
-        document.getElementById("phone").value
-    );
-
-    localStorage.setItem(
-        "sex",
-        document.getElementById("sex").value
-    );
-
-    localStorage.setItem(
-        "dob",
-        document.getElementById("dob").value
-    );
-
-    localStorage.setItem(
-        "blood",
-        document.getElementById("blood").value
-    );
-
-    localStorage.setItem(
-        "country",
-        document.getElementById("country").value
-    );
+    localStorage.setItem("name", name);
+    localStorage.setItem("email", email);
+    localStorage.setItem("phone", phone);
+    localStorage.setItem("password", password);
+    localStorage.setItem("sex", sex);
+    localStorage.setItem("dob", dob);
+    localStorage.setItem("blood", blood);
+    localStorage.setItem("country", country);
 
     alert("Signup Successful");
+
+    // GO TO LOGIN PAGE
+
+    window.location.href = "index.html";
 }
 
 
+// ======================
 // NAVIGATION
+// ======================
+
 function goUpload() {
+
     window.location.href = "upload.html";
 }
 
 function goProfile() {
+
     window.location.href = "profile.html";
 }
 
 
-// ANALYZE BUTTON
+// ======================
+// VALIDATE SURVEY
+// ======================
+
 function validateSurvey() {
 
-    let fileInput = document.getElementById("fileInput");
+    let fileInput =
+        document.getElementById("fileInput");
 
-    // CHECK IMAGE
     if (!fileInput || fileInput.files.length === 0) {
+
         alert("Please upload image first!");
         return;
     }
 
-    // CHECK SYMPTOMS
     let checkboxes = document.querySelectorAll(
         '.symptom-row input[type="checkbox"]'
     );
@@ -95,18 +105,27 @@ function validateSurvey() {
     let checked = false;
 
     checkboxes.forEach((box) => {
+
         if (box.checked) {
             checked = true;
         }
     });
 
     if (!checked) {
-        alert("Please fill symptom survey first!");
+
+        alert("Please select symptoms!");
         return;
     }
 
-    alert("Survey completed. Now click Submit Symptoms.");
+    alert(
+        "Survey completed successfully!"
+    );
 }
+
+
+// ======================
+// SUBMIT SYMPTOMS
+// ======================
 
 async function submitSymptoms() {
 
@@ -118,11 +137,10 @@ async function submitSymptoms() {
     if (!fileInput || fileInput.files.length === 0) {
 
         alert("Please upload image first!");
-
         return;
     }
 
-    // CHECK SYMPTOMS
+    // GET SYMPTOMS
 
     let symptoms = [];
 
@@ -130,12 +148,14 @@ async function submitSymptoms() {
         .querySelectorAll(
             '.symptom-row input[type="checkbox"]:checked'
         )
-        .forEach((cb) => symptoms.push(cb.value));
+        .forEach((cb) => {
+
+            symptoms.push(cb.value);
+        });
 
     if (symptoms.length === 0) {
 
         alert("Please select symptoms!");
-
         return;
     }
 
@@ -146,7 +166,7 @@ async function submitSymptoms() {
         JSON.stringify(symptoms)
     );
 
-    // FORM DATA
+    // CREATE FORM DATA
 
     let formData = new FormData();
 
@@ -157,56 +177,91 @@ async function submitSymptoms() {
 
     try {
 
-    const response = await fetch(
-        "http://localhost:5000/predict",
-        {
-            method: "POST",
-            body: formData
+        // BACKEND CALL
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/predict",
+            {
+                method: "POST",
+                body: formData
+            }
+        );
+
+        if (!response.ok) {
+
+            throw new Error("Server Error");
         }
-    );
 
-    if (!response.ok) {
-        throw new Error("Server Error");
+        const data = await response.json();
+
+        console.log(data);
+
+        // SAVE RESULT
+
+        localStorage.setItem(
+            "prediction",
+            data.result
+        );
+
+        localStorage.setItem(
+            "confidence",
+            data.confidence
+        );
+
+        localStorage.setItem(
+            "hemoglobin",
+            data.hemoglobin
+        );
+
+        // SAVE IMAGE
+
+        let imageURL =
+            URL.createObjectURL(
+                fileInput.files[0]
+            );
+
+        localStorage.setItem(
+            "uploadedImage",
+            imageURL
+        );
+
+        // SAVE UNIQUE PATIENT ID
+
+        if (!localStorage.getItem("patientId")) {
+
+            let patientId =
+                "P" +
+                Math.floor(
+                    100000 +
+                    Math.random() * 900000
+                );
+
+            localStorage.setItem(
+                "patientId",
+                patientId
+            );
+        }
+
+        // GO TO RESULT PAGE
+
+        window.location.href =
+            "result.html";
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Backend connection failed!"
+        );
     }
-
-    const data = await response.json();
-
-    console.log(data);
-
-    localStorage.setItem(
-    "prediction",
-    data.result
-);
-
-localStorage.setItem(
-    "confidence",
-    data.confidence
-);
-
-localStorage.setItem(
-    "hemoglobin",
-    data.hemoglobin
-);
-
-    localStorage.setItem(
-        "uploadedImage",
-        URL.createObjectURL(fileInput.files[0])
-    );
-
-    alert("Prediction Success!");
-
-    window.location.href = "result.html";
-
-} catch (error) {
-
-    console.error(error);
-
-    alert("Backend connection failed!");
-
-}
 }
 
-// RESULT ANALYSIS
+
+// ======================
+// ANALYZE SYMPTOMS
+// ======================
+
 function analyzeSymptoms() {
 
     const symptoms =
@@ -214,45 +269,36 @@ function analyzeSymptoms() {
             localStorage.getItem("symptoms")
         ) || [];
 
-    let result = "";
+    let symptomList =
+        document.getElementById(
+            "symptomList"
+        );
 
-    const count = symptoms.length;
+    if (!symptomList) return;
 
-    if (count >= 6) {
+    symptomList.innerHTML = "";
 
-        result =
-            "⚠ High possibility of Anemia. Please consult a doctor immediately.";
+    symptoms.forEach((symptom) => {
 
-    } else if (count >= 3) {
+        let li =
+            document.createElement("li");
 
-        result =
-            "⚠ Moderate symptoms detected. Monitor your health.";
+        li.innerText = symptom;
 
-    } else if (count > 0) {
-
-        result =
-            "🟡 Mild symptoms detected.";
-
-    } else {
-
-        result =
-            "🟢 No major symptoms detected.";
-    }
-
-    result +=
-        "\n\nSelected Symptoms: " +
-        symptoms.join(", ");
-
-    let resultText =
-        document.getElementById("resultText");
-
-    if (resultText) {
-        resultText.innerText = result;
-    }
+        symptomList.appendChild(li);
+    });
 }
 
-// AUTO LOAD RESULT DATA
+
+// ======================
+// PAGE LOAD
+// ======================
+
 window.onload = function () {
+
+    // ======================
+    // RESULT PAGE
+    // ======================
 
     let prediction =
         localStorage.getItem("prediction");
@@ -261,10 +307,14 @@ window.onload = function () {
         localStorage.getItem("uploadedImage");
 
     let resultText =
-        document.getElementById("resultText");
+        document.getElementById(
+            "predictionText"
+        );
 
     let resultImage =
-        document.getElementById("resultImage");
+        document.getElementById(
+            "uploadedImage"
+        );
 
     if (prediction && resultText) {
 
@@ -272,103 +322,165 @@ window.onload = function () {
             prediction.toLowerCase().includes("anemic")
         ) {
 
-            resultText.innerHTML =
+            resultText.innerText =
                 "Potential Anemia Indicated";
 
         } else {
 
-            resultText.innerHTML =
+            resultText.innerText =
                 "No Anemia Detected";
         }
     }
 
     if (uploadedImage && resultImage) {
+
         resultImage.src = uploadedImage;
     }
 
     analyzeSymptoms();
+
+
+    // ======================
+    // PROFILE PAGE
+    // ======================
+
+    let name =
+        localStorage.getItem("name");
+
+    let email =
+        localStorage.getItem("email");
+
+    let phone =
+        localStorage.getItem("phone");
+
+    let sex =
+        localStorage.getItem("sex");
+
+    let dob =
+        localStorage.getItem("dob");
+
+    let blood =
+        localStorage.getItem("blood");
+
+    let country =
+        localStorage.getItem("country");
+
+    if (document.getElementById("profileName")) {
+
+        document.getElementById(
+            "profileName"
+        ).innerText = name || "";
+
+        document.getElementById(
+            "profileEmail"
+        ).innerText = email || "";
+
+        document.getElementById(
+            "profilePhone"
+        ).innerText = phone || "";
+
+        document.getElementById(
+            "profileSex"
+        ).innerText = sex || "";
+
+        document.getElementById(
+            "profileDOB"
+        ).innerText = dob || "";
+
+        document.getElementById(
+            "bloodGroup"
+        ).innerText = blood || "";
+
+        document.getElementById(
+            "countryName"
+        ).innerText = country || "";
+    }
+
+
+    // ======================
+    // AGE CALCULATION
+    // ======================
+
+    if (dob && document.getElementById("fullAge")) {
+
+        let birthDate =
+            new Date(dob);
+
+        let today =
+            new Date();
+
+        let years =
+            today.getFullYear() -
+            birthDate.getFullYear();
+
+        let months =
+            today.getMonth() -
+            birthDate.getMonth();
+
+        let days =
+            today.getDate() -
+            birthDate.getDate();
+
+        if (days < 0) {
+
+            months--;
+            days += 30;
+        }
+
+        if (months < 0) {
+
+            years--;
+            months += 12;
+        }
+
+        document.getElementById(
+            "fullAge"
+        ).innerHTML =
+            years +
+            " Years " +
+            months +
+            " Months " +
+            days +
+            " Days";
+    }
+
+
+    // ======================
+    // PATIENT DETAILS
+    // ======================
+
+    let patientName =
+        document.getElementById(
+            "patientName"
+        );
+
+    let patientId =
+        document.getElementById(
+            "patientId"
+        );
+
+    let examDate =
+        document.getElementById(
+            "examDate"
+        );
+
+    if (patientName) {
+
+        patientName.innerText =
+            name || "User";
+    }
+
+    if (patientId) {
+
+        patientId.innerText =
+            localStorage.getItem(
+                "patientId"
+            );
+    }
+
+    if (examDate) {
+
+        examDate.innerText =
+            new Date().toDateString();
+    }
 };
-
-window.onload = function () {
-
-    let prediction =
-        localStorage.getItem("prediction");
-
-    let image =
-        localStorage.getItem("uploadedImage");
-
-    let result =
-        document.getElementById("predictionResult");
-
-    let img =
-        document.getElementById("resultImage");
-
-    if (result) {
-        result.innerText =
-            "Prediction: " + prediction;
-    }
-
-    if (img) {
-        img.src = image;
-    }
-};
-
-let username = localStorage.getItem("name");
-
-document.getElementById(
-    "patientName"
-).innerText = username || "User";
-
-let patientId =
-    "P" + Math.floor(Math.random() * 100000);
-
-document.getElementById(
-    "patientId"
-).innerText = patientId;
-
-let today = new Date();
-
-document.getElementById(
-    "examDate"
-).innerText =
-    today.toDateString();
-
-
-let dob = localStorage.getItem("dob");
-
-if (dob) {
-
-    let birthDate = new Date(dob);
-
-    let today = new Date();
-
-    let years =
-        today.getFullYear() -
-        birthDate.getFullYear();
-
-    let months =
-        today.getMonth() -
-        birthDate.getMonth();
-
-    let days =
-        today.getDate() -
-        birthDate.getDate();
-
-    if (days < 0) {
-        months--;
-        days += 30;
-    }
-
-    if (months < 0) {
-        years--;
-        months += 12;
-    }
-
-    document.getElementById(
-        "fullAge"
-    ).innerHTML =
-        "<b>Age:</b> " +
-        years + " Years " +
-        months + " Months " +
-        days + " Days";
-}

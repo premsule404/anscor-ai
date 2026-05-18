@@ -1,32 +1,167 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Register</title>
-<link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Register</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
 <body class="split">
 
-<div class="left">
-    <h1>ANSCOR-AI</h1>
-</div>
+    <!-- LEFT SIDE -->
 
-<div class="right">
-    <h2>Create Account</h2>
+    <div class="left">
 
-    <input id="name" placeholder="Full Name"><br>
-    <input id="email" placeholder="Email"><br>
-    <input id="phone" placeholder="Phone"><br>
-    <input id="password" type="password" placeholder="Password"><br>
-    <input id="sex" placeholder="Sex"><br>
-    <input id="dob" type="date"><br>
-    <input id="age" placeholder="Age"><br>
-    <input id="blood" placeholder="Blood Group"><br>
-    <input id="country" placeholder="Country"><br>
+        <h1>ANSCOR-AI</h1>
 
-    <button onclick="signup()">Register</button>
-</div>
+        <p>
+            AI Based Non-Invasive
+            Anemia Detection System
+        </p>
 
-<script src="script.js"></script>
+    </div>
+
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right">
+
+        <div class="form-container">
+
+            <h2>Create Account</h2>
+
+            <!-- FULL NAME -->
+
+            <input
+                type="text"
+                id="name"
+                placeholder="Full Name"
+            >
+
+            <!-- EMAIL -->
+
+            <input
+                type="email"
+                id="email"
+                placeholder="Email"
+            >
+
+            <!-- PHONE -->
+
+            <input
+                type="text"
+                id="phone"
+                placeholder="Phone Number"
+            >
+
+            <!-- PASSWORD -->
+
+            <input
+                type="password"
+                id="password"
+                placeholder="Password"
+            >
+
+            <!-- SEX -->
+
+            <select id="sex">
+
+                <option value="">
+                    Select Sex
+                </option>
+
+                <option value="Male">
+                    Male
+                </option>
+
+                <option value="Female">
+                    Female
+                </option>
+
+                <option value="Other">
+                    Other
+                </option>
+
+            </select>
+
+            <!-- DOB -->
+
+            <input
+                type="date"
+                id="dob"
+            >
+
+            <!-- BLOOD GROUP -->
+
+            <select id="blood">
+
+                <option value="">
+                    Blood Group
+                </option>
+
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+
+            </select>
+
+            <!-- COUNTRY -->
+
+            <input
+                type="text"
+                id="country"
+                placeholder="Country"
+            >
+
+            <!-- BUTTON -->
+
+            <button onclick="signup()">
+
+                Register
+
+            </button>
+
+            <!-- LOGIN LINK -->
+
+            <p class="bottom-text">
+
+                Already have an account?
+
+                <a href="index.html">
+
+                    Login
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
 </body>
+
 </html>

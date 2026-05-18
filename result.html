@@ -1,48 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
     <title>Result</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
 </head>
 
-<body>
-    <h2 id="predictionResult"></h2>
-    <img id="resultImage" width="250">
+<body class="result-page">
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h2>ANSCOR-AI</h2>
+
+        <button
+            onclick="window.location.href='home.html'"
+        >
+
+            Home
+
+        </button>
+
+    </div>
+
+
+    <!-- RESULT CONTAINER -->
 
     <div class="result-container">
 
+        <!-- TITLE -->
+
         <h1 class="result-title">
+
             Anemia Detection Result
+
         </h1>
+
+
+        <!-- BANNER -->
 
         <div class="result-banner">
 
             <h2 id="predictionText">
-                Potential Anemia Indicated
+
+                Loading Prediction...
+
             </h2>
 
             <p>
-                A full blood count is recommended.
+
+                AI Based Screening Analysis
+
             </p>
 
         </div>
 
+
+        <!-- MAIN GRID -->
+
         <div class="result-grid">
 
-            <!-- LEFT -->
+            <!-- LEFT SIDE -->
 
             <div class="result-card">
 
-                <h3>Patient & Exam Info</h3>
+                <h3>
+
+                    Patient & Exam Info
+
+                </h3>
 
                 <p>
                     <b>Patient ID:</b>
                     <span id="patientId"></span>
                 </p>
+
                 <p>
                     <b>Patient Name:</b>
                     <span id="patientName"></span>
@@ -53,120 +99,239 @@
                     <span id="examDate"></span>
                 </p>
 
-                <p><b>Examining Professional:</b> Dr. Carter</p>
+                <p>
+                    <b>Hemoglobin:</b>
+                    <span id="hemoglobinText"></span>
+                </p>
+
+                <p>
+                    <b>Confidence:</b>
+                    <span id="confidenceText"></span>
+                </p>
 
                 <hr>
 
-                <h3>Observation Detail</h3>
+                <h3>
 
-                <ul class="symptom-list" id="symptomList">
+                    Selected Symptoms
+
+                </h3>
+
+                <ul
+                    class="symptom-list"
+                    id="symptomList"
+                >
 
                 </ul>
 
             </div>
 
-            <!-- RIGHT -->
+
+            <!-- RIGHT SIDE -->
 
             <div class="result-card">
 
-                <h3>Analyzed Image</h3>
+                <h3>
 
-                <img 
+                    Analyzed Image
+
+                </h3>
+
+                <img
                     id="uploadedImage"
                     class="result-image"
-                    style="
-                        width:250px;
-                        height:250px;
-                        object-fit:cover;
-                        border-radius:15px;
-                        margin-top:10px;
-                    "
+                    alt="Uploaded Image"
                 >
-
-                <p>
-                    <b>Analyzed Area:</b>
-                    Nail Region
-                </p>
 
                 <hr>
 
-                <h3>Recommendation</h3>
+                <h3>
 
-                <p>
-                    Based on nail bed pallor,
-                    positive indicators were observed.
-                </p>
+                    Recommendation
 
-                <p>
-                    Follow-up:
-                    Schedule a Full Blood Count (FBC/CBC).
+                </h3>
+
+                <p id="recommendationText">
+
+                    Loading recommendation...
+
                 </p>
 
             </div>
 
         </div>
 
+
+        <!-- BUTTONS -->
+
         <div class="action-buttons">
 
             <button>
+
                 Download Report
+
             </button>
 
             <button>
+
                 Book FBC Test
+
             </button>
 
         </div>
 
+
+        <!-- DISCLAIMER -->
+
         <div class="disclaimer">
 
-            This is a screening tool,
-            not a full diagnosis.
-            Results are preliminary and
-            must be confirmed by a healthcare professional.
+            This is an AI-based
+            screening tool and not
+            a final medical diagnosis.
+            Please consult a healthcare
+            professional for confirmation.
 
         </div>
 
     </div>
 
+
+    <!-- RESULT SCRIPT -->
+
     <script>
 
-        // IMAGE
-
-        let image =
-            localStorage.getItem("uploadedImage");
-
-        document.getElementById(
-            "uploadedImage"
-        ).src = image;
-
-
-        // PREDICTION
+        // ======================
+        // GET LOCAL STORAGE DATA
+        // ======================
 
         let prediction =
-            localStorage.getItem("prediction");
-            console.log(prediction);
+            localStorage.getItem(
+                "prediction"
+            );
 
-        if(prediction){
+        let confidence =
+            localStorage.getItem(
+                "confidence"
+            );
 
-            document.getElementById(
-                "predictionText"
-            ).innerText = "Prediction: " + prediction;
+        let hemoglobin =
+            localStorage.getItem(
+                "hemoglobin"
+            );
 
-        }
+        let image =
+            localStorage.getItem(
+                "uploadedImage"
+            );
 
+        let username =
+            localStorage.getItem(
+                "name"
+            );
 
-        // SYMPTOMS
+        let patientId =
+            localStorage.getItem(
+                "patientId"
+            );
 
         let symptoms =
             JSON.parse(
-                localStorage.getItem("symptoms")
+                localStorage.getItem(
+                    "symptoms"
+                )
             ) || [];
 
-        let symptomList =
-            document.getElementById("symptomList");
 
-        symptoms.forEach((symptom)=>{
+        // ======================
+        // PREDICTION
+        // ======================
+
+        if (prediction) {
+
+            document.getElementById(
+                "predictionText"
+            ).innerText =
+                prediction;
+
+        } else {
+
+            document.getElementById(
+                "predictionText"
+            ).innerText =
+                "No Prediction Available";
+        }
+
+
+        // ======================
+        // IMAGE
+        // ======================
+
+        if (image) {
+
+            document.getElementById(
+                "uploadedImage"
+            ).src = image;
+        }
+
+
+        // ======================
+        // USER INFO
+        // ======================
+
+        document.getElementById(
+            "patientName"
+        ).innerText =
+            username || "User";
+
+        document.getElementById(
+            "patientId"
+        ).innerText =
+            patientId || "P000000";
+
+
+        // ======================
+        // DATE
+        // ======================
+
+        let today =
+            new Date();
+
+        document.getElementById(
+            "examDate"
+        ).innerText =
+            today.toDateString();
+
+
+        // ======================
+        // HEMOGLOBIN
+        // ======================
+
+        document.getElementById(
+            "hemoglobinText"
+        ).innerText =
+            hemoglobin || "12.5 g/dL";
+
+
+        // ======================
+        // CONFIDENCE
+        // ======================
+
+        document.getElementById(
+            "confidenceText"
+        ).innerText =
+            confidence || "95%";
+
+
+        // ======================
+        // SYMPTOMS
+        // ======================
+
+        let symptomList =
+            document.getElementById(
+                "symptomList"
+            );
+
+        symptoms.forEach((symptom) => {
 
             let li =
                 document.createElement("li");
@@ -177,8 +342,34 @@
 
         });
 
+
+        // ======================
+        // RECOMMENDATION
+        // ======================
+
+        let recommendation =
+            document.getElementById(
+                "recommendationText"
+            );
+
+        if (
+            prediction &&
+            prediction.toLowerCase().includes("anemia")
+        ) {
+
+            recommendation.innerText =
+                "Potential anemia detected. A Full Blood Count (FBC/CBC) test is recommended. Please consult a healthcare professional.";
+
+        } else {
+
+            recommendation.innerText =
+                "No strong anemia indicators detected. Maintain healthy nutrition and regular monitoring.";
+        }
+
     </script>
+
     <script src="script.js"></script>
+
 </body>
 
 </html>
