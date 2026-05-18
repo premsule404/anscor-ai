@@ -1,102 +1,161 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <title>Check Anemia</title>
+
     <link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
 
-<h1 style="text-align:center;">Anemia Check</h1>
+    <h1 style="text-align:center;">Anemia Check</h1>
 
-<!-- PART 1: IMAGE UPLOAD -->
-<div class="section">
-    <h2>Select Image Source</h2>
+    <!-- IMAGE UPLOAD SECTION -->
 
-    <div class="upload-box">
-        <label>
-            <input id="fileInput" type="file" accept="image/*" capture="camera">
-            📷 Camera
-        </label>
+    <div class="section">
 
-        <label>
-            <input type="file" accept="image/*">
-            🖼 Photos
-        </label>
+        <h2>Select Image Source</h2>
 
-        <label>
-            <input type="file">
-            📁 Files
-        </label>
+        <div class="upload-box">
+
+            <!-- CAMERA -->
+
+            <label class="upload-option">
+
+                <input
+                    id="fileInput"
+                    type="file"
+                    accept="image/*"
+                    capture="camera"
+                    hidden
+                >
+
+                📷 Camera
+
+            </label>
+
+            <!-- PHOTOS -->
+
+            <label class="upload-option">
+
+                <input
+                    type="file"
+                    accept="image/*"
+                    hidden
+                    onchange="document.getElementById('fileInput').files=this.files"
+                >
+
+                🖼 Photos
+
+            </label>
+
+            <!-- FILES -->
+
+            <label class="upload-option">
+
+                <input
+                    type="file"
+                    hidden
+                    onchange="document.getElementById('fileInput').files=this.files"
+                >
+
+                📁 Files
+
+            </label>
+
+        </div>
+
+        <div class="button-group">
+
+            <button
+                id="analyzeBtn"
+                onclick="validateSurvey()"
+            >
+                Analyze Image
+            </button>
+
+        </div>
+
     </div>
 
-    <button onclick="upload()">Upload</button>
-</div>
+    <!-- SYMPTOMS SECTION -->
 
-<!-- PART 2: SYMPTOMS -->
-<div class="section">
-    <h2>Check Symptoms</h2>
+    <div class="section">
 
-    <div class="symptom-row">
-        <label>Feeling faint</label>
-        <input type="checkbox" value="Feeling faint">
+        <h2>Check Symptoms</h2>
+
+        <div class="symptom-row">
+            <label>Feeling faint</label>
+            <input type="checkbox" value="Feeling faint">
+        </div>
+
+        <div class="symptom-row">
+            <label>Malaise</label>
+            <input type="checkbox" value="Malaise">
+        </div>
+
+        <div class="symptom-row">
+            <label>Dizziness</label>
+            <input type="checkbox" value="Dizziness">
+        </div>
+
+        <div class="symptom-row">
+            <label>Shortness of breath</label>
+            <input type="checkbox" value="Shortness of breath">
+        </div>
+
+        <div class="symptom-row">
+            <label>Lightheadedness</label>
+            <input type="checkbox" value="Lightheadedness">
+        </div>
+
+        <div class="symptom-row">
+            <label>Pallor</label>
+            <input type="checkbox" value="Pallor">
+        </div>
+
+        <div class="symptom-row">
+            <label>Cold feet</label>
+            <input type="checkbox" value="Cold feet">
+        </div>
+
+        <div class="symptom-row">
+            <label>Extreme fatigue</label>
+            <input type="checkbox" value="Extreme fatigue">
+        </div>
+
+        <div class="symptom-row">
+            <label>Pale skin</label>
+            <input type="checkbox" value="Pale skin">
+        </div>
+
+        <div class="symptom-row">
+            <label>Tiredness</label>
+            <input type="checkbox" value="Tiredness">
+        </div>
+
+        <div class="symptom-row">
+            <label>Fatigue after eating</label>
+            <input type="checkbox" value="Fatigue after eating">
+        </div>
+
+        <div class="button-group">
+
+            <button onclick="submitSymptoms()">
+
+                Submit Symptoms
+
+            </button>
+
+        </div>
+
     </div>
 
-    <div class="symptom-row">
-        <label>Malaise</label>
-        <input type="checkbox" value="Malaise">
-    </div>
-
-    <div class="symptom-row">
-        <label>Dizziness</label>
-        <input type="checkbox" value="Dizziness">
-    </div>
-
-    <div class="symptom-row">
-        <label>Shortness of breath</label>
-        <input type="checkbox" value="Shortness of breath">
-    </div>
-
-    <div class="symptom-row">
-        <label>Lightheadedness</label>
-        <input type="checkbox" value="Lightheadedness">
-    </div>
-
-    <div class="symptom-row">
-        <label>Pallor</label>
-        <input type="checkbox" value="Pallor">
-    </div>
-
-    <div class="symptom-row">
-        <label>Cold feet</label>
-        <input type="checkbox" value="Cold feet">
-    </div>
-
-    <div class="symptom-row">
-        <label>Extreme fatigue</label>
-        <input type="checkbox" value="Extreme fatigue">
-    </div>
-
-    <div class="symptom-row">
-        <label>Pale skin</label>
-        <input type="checkbox" value="Pale skin">
-    </div>
-
-    <div class="symptom-row">
-        <label>Tiredness</label>
-        <input type="checkbox" value="Tiredness">
-    </div>
-
-    <div class="symptom-row">
-        <label>Fatigue after eating</label>
-        <input type="checkbox" value="Fatigue after eating">
-    </div>
-
-    <button onclick="submitSymptoms()">Submit Symptoms</button>
-</div>
-
-
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
+
 </html>

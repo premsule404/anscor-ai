@@ -1,19 +1,184 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+
     <title>Result</title>
+
     <link rel="stylesheet" href="style.css">
+
 </head>
+
 <body>
+    <h2 id="predictionResult"></h2>
+    <img id="resultImage" width="250">
 
-<div class="card">
-    <h2>Analysis Result</h2>
-    <p id="resultText"></p>
-</div>
+    <div class="result-container">
 
-<script src="script.js"></script>
-<script>
-    analyzeSymptoms();
-</script>
+        <h1 class="result-title">
+            Anemia Detection Result
+        </h1>
+
+        <div class="result-banner">
+
+            <h2 id="predictionText">
+                Potential Anemia Indicated
+            </h2>
+
+            <p>
+                A full blood count is recommended.
+            </p>
+
+        </div>
+
+        <div class="result-grid">
+
+            <!-- LEFT -->
+
+            <div class="result-card">
+
+                <h3>Patient & Exam Info</h3>
+
+                <p>
+                    <b>Patient ID:</b>
+                    <span id="patientId"></span>
+                </p>
+                <p>
+                    <b>Patient Name:</b>
+                    <span id="patientName"></span>
+                </p>
+
+                <p>
+                    <b>Exam Date:</b>
+                    <span id="examDate"></span>
+                </p>
+
+                <p><b>Examining Professional:</b> Dr. Carter</p>
+
+                <hr>
+
+                <h3>Observation Detail</h3>
+
+                <ul class="symptom-list" id="symptomList">
+
+                </ul>
+
+            </div>
+
+            <!-- RIGHT -->
+
+            <div class="result-card">
+
+                <h3>Analyzed Image</h3>
+
+                <img 
+                    id="uploadedImage"
+                    class="result-image"
+                    style="
+                        width:250px;
+                        height:250px;
+                        object-fit:cover;
+                        border-radius:15px;
+                        margin-top:10px;
+                    "
+                >
+
+                <p>
+                    <b>Analyzed Area:</b>
+                    Nail Region
+                </p>
+
+                <hr>
+
+                <h3>Recommendation</h3>
+
+                <p>
+                    Based on nail bed pallor,
+                    positive indicators were observed.
+                </p>
+
+                <p>
+                    Follow-up:
+                    Schedule a Full Blood Count (FBC/CBC).
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="action-buttons">
+
+            <button>
+                Download Report
+            </button>
+
+            <button>
+                Book FBC Test
+            </button>
+
+        </div>
+
+        <div class="disclaimer">
+
+            This is a screening tool,
+            not a full diagnosis.
+            Results are preliminary and
+            must be confirmed by a healthcare professional.
+
+        </div>
+
+    </div>
+
+    <script>
+
+        // IMAGE
+
+        let image =
+            localStorage.getItem("uploadedImage");
+
+        document.getElementById(
+            "uploadedImage"
+        ).src = image;
+
+
+        // PREDICTION
+
+        let prediction =
+            localStorage.getItem("prediction");
+            console.log(prediction);
+
+        if(prediction){
+
+            document.getElementById(
+                "predictionText"
+            ).innerText = "Prediction: " + prediction;
+
+        }
+
+
+        // SYMPTOMS
+
+        let symptoms =
+            JSON.parse(
+                localStorage.getItem("symptoms")
+            ) || [];
+
+        let symptomList =
+            document.getElementById("symptomList");
+
+        symptoms.forEach((symptom)=>{
+
+            let li =
+                document.createElement("li");
+
+            li.innerText = symptom;
+
+            symptomList.appendChild(li);
+
+        });
+
+    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
