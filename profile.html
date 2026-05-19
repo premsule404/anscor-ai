@@ -1,37 +1,254 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<title>Profile</title>
-<link rel="stylesheet" href="style.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Profile</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
-<body>
+<body class="profile-page">
 
-<div class="profile-box">
-    <h2>User Profile</h2>
+    <!-- NAVBAR -->
 
-    <p><b>Name:</b> <span id="name"></span></p>
-    <p><b>Email:</b> <span id="email"></span></p>
-    <p><b>Phone:</b> <span id="phone"></span></p>
-    <p><b>Sex:</b> <span id="sex"></span></p>
-    <p><b>DOB:</b> <span id="dob"></span></p>
-    <p id="fullAge"></p>
-    <p><b>Blood Group:</b> <span id="blood"></span></p>
-    <p><b>Country:</b> <span id="country"></span></p>
-</div>
+    <div class="navbar">
 
-<script>
-document.getElementById("name").innerText = localStorage.getItem("name");
-document.getElementById("email").innerText = localStorage.getItem("email");
-document.getElementById("phone").innerText = localStorage.getItem("phone");
+        <h2>ANSCOR-AI</h2>
 
-document.getElementById("sex").innerText = localStorage.getItem("sex");
-document.getElementById("dob").innerText = localStorage.getItem("dob");
-document.getElementById("age").innerText = localStorage.getItem("age");
-document.getElementById("blood").innerText = localStorage.getItem("blood");
-document.getElementById("country").innerText = localStorage.getItem("country");
-</script>
+        <button
+            onclick="window.location.href='home.html'"
+        >
+
+            Home
+
+        </button>
+
+    </div>
+
+
+    <!-- PROFILE BOX -->
+
+    <div class="profile-box">
+
+        <h2>User Profile</h2>
+
+        <!-- NAME -->
+
+        <p>
+            <b>Name:</b>
+            <span id="profileName"></span>
+        </p>
+
+        <!-- EMAIL -->
+
+        <p>
+            <b>Email:</b>
+            <span id="profileEmail"></span>
+        </p>
+
+        <!-- PHONE -->
+
+        <p>
+            <b>Phone:</b>
+            <span id="profilePhone"></span>
+        </p>
+
+        <!-- SEX -->
+
+        <p>
+            <b>Sex:</b>
+            <span id="profileSex"></span>
+        </p>
+
+        <!-- DOB -->
+
+        <p>
+            <b>DOB:</b>
+            <span id="profileDOB"></span>
+        </p>
+
+        <!-- AGE -->
+
+        <p>
+            <b>Age:</b>
+            <span id="fullAge"></span>
+        </p>
+
+        <!-- BLOOD GROUP -->
+
+        <p>
+            <b>Blood Group:</b>
+            <span id="bloodGroup"></span>
+        </p>
+
+        <!-- COUNTRY -->
+
+        <p>
+            <b>Country:</b>
+            <span id="countryName"></span>
+        </p>
+
+    </div>
+
+
+    <!-- SCRIPT -->
+
+    <script>
+
+        // ======================
+        // GET USER DATA
+        // ======================
+
+        let name =
+            localStorage.getItem(
+                "name"
+            );
+
+        let email =
+            localStorage.getItem(
+                "email"
+            );
+
+        let phone =
+            localStorage.getItem(
+                "phone"
+            );
+
+        let sex =
+            localStorage.getItem(
+                "sex"
+            );
+
+        let dob =
+            localStorage.getItem(
+                "dob"
+            );
+
+        let blood =
+            localStorage.getItem(
+                "blood"
+            );
+
+        let country =
+            localStorage.getItem(
+                "country"
+            );
+
+
+        // ======================
+        // DISPLAY DATA
+        // ======================
+
+        document.getElementById(
+            "profileName"
+        ).innerText =
+            name || "Not Available";
+
+        document.getElementById(
+            "profileEmail"
+        ).innerText =
+            email || "Not Available";
+
+        document.getElementById(
+            "profilePhone"
+        ).innerText =
+            phone || "Not Available";
+
+        document.getElementById(
+            "profileSex"
+        ).innerText =
+            sex || "Not Available";
+
+        document.getElementById(
+            "profileDOB"
+        ).innerText =
+            dob || "Not Available";
+
+        document.getElementById(
+            "bloodGroup"
+        ).innerText =
+            blood || "Not Available";
+
+        document.getElementById(
+            "countryName"
+        ).innerText =
+            country || "Not Available";
+
+
+        // ======================
+        // AGE CALCULATION
+        // ======================
+
+        if (dob) {
+
+            let birthDate =
+                new Date(dob);
+
+            let today =
+                new Date();
+
+            let years =
+                today.getFullYear() -
+                birthDate.getFullYear();
+
+            let months =
+                today.getMonth() -
+                birthDate.getMonth();
+
+            let days =
+                today.getDate() -
+                birthDate.getDate();
+
+            // HANDLE NEGATIVE DAYS
+
+            if (days < 0) {
+
+                months--;
+
+                days += 30;
+            }
+
+            // HANDLE NEGATIVE MONTHS
+
+            if (months < 0) {
+
+                years--;
+
+                months += 12;
+            }
+
+            // FINAL AGE
+
+            document.getElementById(
+                "fullAge"
+            ).innerText =
+
+                years +
+                " Years " +
+
+                months +
+                " Months " +
+
+                days +
+                " Days";
+        }
+
+    </script>
+
+    <script src="script.js"></script>
 
 </body>
+
 </html>
