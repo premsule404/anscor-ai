@@ -524,3 +524,19 @@ body {
         font-size: 25px;
     }
 }
+
+.welcome-image-box{
+    width:90%;
+    margin:auto;
+    margin-top:40px;
+    margin-bottom:40px;
+    text-align:center;
+}
+
+.welcome-image{
+    width:100%;
+    max-width:1300px;
+    border-radius:25px;
+    box-shadow:0 0 25px rgba(0,0,0,0.6);
+    border:4px solid rgba(255,255,255,0.2);
+}

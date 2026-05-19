@@ -62,8 +62,6 @@ function signup() {
 
     alert("Signup Successful");
 
-    // GO TO LOGIN PAGE
-
     window.location.href = "index.html";
 }
 
@@ -98,28 +96,7 @@ function validateSurvey() {
         return;
     }
 
-    let checkboxes = document.querySelectorAll(
-        '.symptom-row input[type="checkbox"]'
-    );
-
-    let checked = false;
-
-    checkboxes.forEach((box) => {
-
-        if (box.checked) {
-            checked = true;
-        }
-    });
-
-    if (!checked) {
-
-        alert("Please select symptoms!");
-        return;
-    }
-
-    alert(
-        "Survey completed successfully!"
-    );
+    alert("Image Selected Successfully");
 }
 
 
@@ -132,15 +109,15 @@ async function submitSymptoms() {
     let fileInput =
         document.getElementById("fileInput");
 
-    // CHECK IMAGE
-
     if (!fileInput || fileInput.files.length === 0) {
 
         alert("Please upload image first!");
         return;
     }
 
+    // ======================
     // GET SYMPTOMS
+    // ======================
 
     let symptoms = [];
 
@@ -166,95 +143,118 @@ async function submitSymptoms() {
         JSON.stringify(symptoms)
     );
 
-    // CREATE FORM DATA
+    // ======================
+    // SAVE IMAGE
+    // ======================
 
-    let formData = new FormData();
+    let file =
+        fileInput.files[0];
 
-    formData.append(
-        "image",
-        fileInput.files[0]
-    );
+    let reader =
+        new FileReader();
 
-    try {
-
-        // BACKEND CALL
-
-        const response = await fetch(
-            "http://127.0.0.1:5000/predict",
-            {
-                method: "POST",
-                body: formData
-            }
-        );
-
-        if (!response.ok) {
-
-            throw new Error("Server Error");
-        }
-
-        const data = await response.json();
-
-        console.log(data);
-
-        // SAVE RESULT
-
-        localStorage.setItem(
-            "prediction",
-            data.result
-        );
-
-        localStorage.setItem(
-            "confidence",
-            data.confidence
-        );
-
-        localStorage.setItem(
-            "hemoglobin",
-            data.hemoglobin
-        );
-
-        // SAVE IMAGE
-
-        let imageURL =
-            URL.createObjectURL(
-                fileInput.files[0]
-            );
+    reader.onload = async function (e) {
 
         localStorage.setItem(
             "uploadedImage",
-            imageURL
+            e.target.result
         );
 
-        // SAVE UNIQUE PATIENT ID
+        // ======================
+        // CREATE FORM DATA
+        // ======================
 
-        if (!localStorage.getItem("patientId")) {
+        let formData =
+            new FormData();
 
-            let patientId =
-                "P" +
-                Math.floor(
-                    100000 +
-                    Math.random() * 900000
+        formData.append(
+            "image",
+            file
+        );
+
+        try {
+
+            const response =
+                await fetch(
+                    "http://127.0.0.1:5000/predict",
+                    {
+                        method: "POST",
+                        body: formData
+                    }
                 );
 
+            if (!response.ok) {
+
+                throw new Error(
+                    "Server Error"
+                );
+            }
+
+            const data =
+                await response.json();
+
+            console.log(data);
+
+            // ======================
+            // SAVE RESULT
+            // ======================
+
             localStorage.setItem(
-                "patientId",
-                patientId
+                "prediction",
+                data.prediction.result
+            );
+
+            localStorage.setItem(
+                "confidence",
+                data.prediction.confidence + "%"
+            );
+
+            localStorage.setItem(
+                "hemoglobin",
+                data.prediction.hemoglobin
+            );
+
+            // ======================
+            // PATIENT ID
+            // ======================
+
+            if (
+                !localStorage.getItem(
+                    "patientId"
+                )
+            ) {
+
+                let patientId =
+                    "P" +
+                    Math.floor(
+                        100000 +
+                        Math.random() * 900000
+                    );
+
+                localStorage.setItem(
+                    "patientId",
+                    patientId
+                );
+            }
+
+            // ======================
+            // GO RESULT PAGE
+            // ======================
+
+            window.location.href =
+                "result.html";
+
+        } catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Backend connection failed!"
             );
         }
+    };
 
-        // GO TO RESULT PAGE
-
-        window.location.href =
-            "result.html";
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Backend connection failed!"
-        );
-    }
+    reader.readAsDataURL(file);
 }
 
 
@@ -266,7 +266,9 @@ function analyzeSymptoms() {
 
     const symptoms =
         JSON.parse(
-            localStorage.getItem("symptoms")
+            localStorage.getItem(
+                "symptoms"
+            )
         ) || [];
 
     let symptomList =
@@ -301,10 +303,14 @@ window.onload = function () {
     // ======================
 
     let prediction =
-        localStorage.getItem("prediction");
+        localStorage.getItem(
+            "prediction"
+        );
 
     let uploadedImage =
-        localStorage.getItem("uploadedImage");
+        localStorage.getItem(
+            "uploadedImage"
+        );
 
     let resultText =
         document.getElementById(
@@ -318,23 +324,19 @@ window.onload = function () {
 
     if (prediction && resultText) {
 
-        if (
-            prediction.toLowerCase().includes("anemic")
-        ) {
+        resultText.innerText =
+            prediction;
 
-            resultText.innerText =
-                "Potential Anemia Indicated";
+    } else if (resultText) {
 
-        } else {
-
-            resultText.innerText =
-                "No Anemia Detected";
-        }
+        resultText.innerText =
+            "No Prediction Available";
     }
 
     if (uploadedImage && resultImage) {
 
-        resultImage.src = uploadedImage;
+        resultImage.src =
+            uploadedImage;
     }
 
     analyzeSymptoms();
@@ -441,7 +443,7 @@ window.onload = function () {
             months +
             " Months " +
             days +
-            " Days";
+            " Days Old";
     }
 
 
@@ -484,4 +486,3 @@ window.onload = function () {
             new Date().toDateString();
     }
 };
-

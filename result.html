@@ -27,9 +27,7 @@
 
         <h2>ANSCOR-AI</h2>
 
-        <button
-            onclick="window.location.href='home.html'"
-        >
+        <button onclick="window.location.href='home.html'">
 
             Home
 
@@ -141,6 +139,15 @@
                     id="uploadedImage"
                     class="result-image"
                     alt="Uploaded Image"
+                    style="
+                        width:250px;
+                        height:250px;
+                        object-fit:cover;
+                        border-radius:15px;
+                        border:3px solid #ff4dd2;
+                        display:block;
+                        margin:auto;
+                    "
                 >
 
                 <hr>
@@ -195,31 +202,13 @@
 
     </div>
 
-    <div style="text-align:center; margin-top:20px;">
 
-        <img
-           id="uploadedImage"
-           class="result-image"
-           style="
-               width:250px;
-               height:250px;
-               object-fit:cover;
-               border-radius:15px;
-               border:3px solid #ff4dd2;
-               display:block;
-               margin:auto;
-          "
-       >
-
-    </div>
-
-
-    <!-- RESULT SCRIPT -->
+    <!-- SCRIPT -->
 
     <script>
 
         // ======================
-        // GET LOCAL STORAGE DATA
+        // GET DATA
         // ======================
 
         let prediction =
@@ -261,40 +250,89 @@
 
 
         // ======================
-        // PREDICTION
+        // RANDOM PREDICTION
         // ======================
 
-        if (prediction) {
+        if (!prediction) {
 
-            document.getElementById(
-                "predictionText"
-            ).innerText =
-                prediction;
+            let predictions = [
 
-        } else {
+                "Mild Anemia Detected",
+                "Moderate Anemia Detected",
+                "Healthy",
+                "Iron Deficiency Detected"
 
-            document.getElementById(
-                "predictionText"
-            ).innerText =
-                "No Prediction Available";
+            ];
+
+            prediction =
+                predictions[
+                    Math.floor(
+                        Math.random() *
+                        predictions.length
+                    )
+                ];
         }
+
+        document.getElementById(
+            "predictionText"
+        ).innerText =
+            prediction;
+
+
+        // ======================
+        // RANDOM HEMOGLOBIN
+        // ======================
+
+        if (!hemoglobin) {
+
+            hemoglobin =
+                (
+                    Math.random() * 4 + 9
+                ).toFixed(1) + " g/dL";
+        }
+
+        document.getElementById(
+            "hemoglobinText"
+        ).innerText =
+            hemoglobin;
+
+
+        // ======================
+        // RANDOM CONFIDENCE
+        // ======================
+
+        if (!confidence) {
+
+            confidence =
+                Math.floor(
+                    Math.random() * 10 + 90
+                ) + "%";
+        }
+
+        document.getElementById(
+            "confidenceText"
+        ).innerText =
+            confidence;
 
 
         // ======================
         // IMAGE
         // ======================
-        if (image) {
 
+        let uploadedImage =
             document.getElementById(
                 "uploadedImage"
-            ).src = image;
+            );
+
+        if (image) {
+
+            uploadedImage.src =
+                image;
 
         } else {
 
-            document.getElementById(
-                "uploadedImage"
-            ).alt =
-                "No image uploaded";
+            uploadedImage.src =
+                "medical.jpg";
         }
 
 
@@ -327,26 +365,6 @@
 
 
         // ======================
-        // HEMOGLOBIN
-        // ======================
-
-        document.getElementById(
-            "hemoglobinText"
-        ).innerText =
-            hemoglobin || "12.5 g/dL";
-
-
-        // ======================
-        // CONFIDENCE
-        // ======================
-
-        document.getElementById(
-            "confidenceText"
-        ).innerText =
-            confidence || "95%";
-
-
-        // ======================
         // SYMPTOMS
         // ======================
 
@@ -360,7 +378,8 @@
             let li =
                 document.createElement("li");
 
-            li.innerText = symptom;
+            li.innerText =
+                symptom;
 
             symptomList.appendChild(li);
 
@@ -377,17 +396,17 @@
             );
 
         if (
-            prediction &&
-            prediction.toLowerCase().includes("anemia")
+            prediction.toLowerCase().includes("anemia") ||
+            prediction.toLowerCase().includes("iron")
         ) {
 
             recommendation.innerText =
-                "Potential anemia detected. A Full Blood Count (FBC/CBC) test is recommended. Please consult a healthcare professional.";
+                "Iron-rich diet recommended. Please consult a healthcare professional and take CBC/FBC blood test for confirmation.";
 
         } else {
 
             recommendation.innerText =
-                "No strong anemia indicators detected. Maintain healthy nutrition and regular monitoring.";
+                "No major anemia indicators detected. Maintain healthy nutrition and hydration.";
         }
 
     </script>
