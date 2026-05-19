@@ -90,8 +90,8 @@ def predict():
 
         # SAVE IMAGE
 
-        filepath = os.path.join(
-           
+        filepath =os.path.join(
+            
                 UPLOAD_FOLDER,
                 file.filename
             )
@@ -100,8 +100,8 @@ def predict():
 
         # PREDICT
 
-        prediction_data =predict_anemia(filepath)
-            
+        prediction_data = predict_anemia(filepath)
+           
 
         print(prediction_data)
 
