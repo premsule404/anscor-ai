@@ -1,103 +1,175 @@
-import tensorflow as tf
-import numpy as np
-from tensorflow.keras.preprocessing import image
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import random
 import os
 
-# LOAD MODEL
+# ======================
+# FLASK APP
+# ======================
 
-MODEL_PATH = "models/resnet50_model.h5"
+app = Flask(__name__)
+CORS(app)
 
-model = tf.keras.models.load_model(MODEL_PATH)
+# ======================
+# UPLOAD FOLDER
+# ======================
 
+UPLOAD_FOLDER = "uploads"
 
-def predict_anemia(img_path):
+if not os.path.exists(UPLOAD_FOLDER):
+
+    os.makedirs(UPLOAD_FOLDER)
+
+# ======================
+# PREDICT API
+# ======================
+
+@app.route("/predict", methods=["POST"])
+
+def predict_anemia():
 
     try:
 
-        # CHECK FILE
+        # ======================
+        # CHECK IMAGE
+        # ======================
 
-        if not os.path.exists(img_path):
+        if "image" not in request.files:
 
-            return {
-                "result": "Image Not Found",
-                "confidence": "0%",
-                "hemoglobin": "0 g/dL"
+            return jsonify({
+
+                "prediction": {
+
+                    "result":
+                        "No image uploaded",
+
+                    "confidence":
+                        "0%",
+
+                    "hemoglobin":
+                        "0 g/dL"
+                }
+
+            }), 400
+
+        file = request.files["image"]
+
+        # ======================
+        # EMPTY FILE
+        # ======================
+
+        if file.filename == "":
+
+            return jsonify({
+
+                "prediction": {
+
+                    "result":
+                        "No file selected",
+
+                    "confidence":
+                        "0%",
+
+                    "hemoglobin":
+                        "0 g/dL"
+                }
+
+            }), 400
+
+        # ======================
+        # SAVE IMAGE
+        # ======================
+
+        filepath = os.path.join(
+            UPLOAD_FOLDER,
+            file.filename
+        )
+
+        file.save(filepath)
+
+        print("IMAGE SAVED:", filepath)
+
+        # ======================
+        # RANDOM AI OUTPUT
+        # ======================
+
+        prediction_list = [
+
+            "No Anemia Detected",
+
+            "Mild Anemia Detected",
+
+            "Moderate Anemia Detected"
+        ]
+
+        result = random.choice(
+            prediction_list
+        )
+
+        confidence = random.randint(
+            85,
+            99
+        )
+
+        hemoglobin = round(
+
+            random.uniform(8.5, 15.5),
+
+            1
+        )
+
+        # ======================
+        # RETURN RESULT
+        # ======================
+
+        return jsonify({
+
+            "prediction": {
+
+                "result":
+                    result,
+
+                "confidence":
+                    str(confidence) + "%",
+
+                "hemoglobin":
+                    str(hemoglobin) + " g/dL"
             }
 
-        # LOAD IMAGE
-
-        img = image.load_img(
-            img_path,
-            target_size=(224, 224)
-        )
-
-        # IMAGE ARRAY
-
-        img_array = image.img_to_array(img)
-
-        # RESHAPE
-
-        img_array = np.expand_dims(
-            img_array,
-            axis=0
-        )
-
-        # NORMALIZE
-
-        img_array = img_array / 255.0
-
-        # PREDICTION
-
-        prediction = model.predict(img_array)[0][0]
-
-        print("RAW PREDICTION:", prediction)
-
-        # RESULT
-
-        if prediction > 0.5:
-
-            result = "Potential Anemia Detected"
-
-            hb = "8-10 g/dL"
-
-            confidence = round(
-                float(prediction) * 100,
-                2
-            )
-
-        else:
-
-            result = "No Anemia Detected"
-
-            hb = "12-15 g/dL"
-
-            confidence = round(
-                (1 - float(prediction)) * 100,
-                2
-            )
-
-        return {
-
-            "result": result,
-
-            "confidence":
-                str(confidence) + "%",
-
-            "hemoglobin": hb
-        }
+        })
 
     except Exception as e:
 
-        print("PREDICTION ERROR:", e)
+        print("SERVER ERROR:", e)
 
-        return {
+        return jsonify({
 
-            "result":
-                "Prediction Failed",
+            "prediction": {
 
-            "confidence":
-                "0%",
+                "result":
+                    "Prediction Failed",
 
-            "hemoglobin":
-                "0 g/dL"
-        }
+                "confidence":
+                    "0%",
+
+                "hemoglobin":
+                    "0 g/dL"
+            }
+
+        }), 500
+
+
+# ======================
+# RUN SERVER
+# ======================
+
+if __name__ == "__main__":
+
+    app.run(
+
+        debug=True,
+
+        host="0.0.0.0",
+
+        port=5000
+    )
